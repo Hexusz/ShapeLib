@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ShapeLib.Interfaces;
 
 namespace ShapeLib.Shapes
@@ -15,6 +11,13 @@ namespace ShapeLib.Shapes
 
         public Triangle(double sideA, double sideB, double sideC)
         {
+
+            if (sideA <= 0 || sideB <= 0 || sideC <= 0)
+                throw new ArgumentException("Не все стороны треугольника положительны");
+
+            if (sideA + sideB <= sideC || sideA + sideC <= sideB || sideB + sideC <= sideA)
+                throw new ArgumentException("Такого треугольника не может существовать");
+
             this.sideA = sideA;
             this.sideB = sideB;
             this.sideC = sideC;
@@ -22,12 +25,6 @@ namespace ShapeLib.Shapes
 
         public double GetArea()
         {
-            if (sideA <= 0 || sideB <= 0 || sideC <= 0)
-                throw new ArgumentException("Не все стороны треугольника положительны");
-
-            if (sideA + sideB <= sideC || sideA + sideC <= sideB || sideB + sideC <= sideA)
-                throw new ArgumentException("Такого треугольника не может существовать");
-
             // Формула Герона
             double s = (sideA + sideB + sideC) / 2;
             return Math.Sqrt(s * (s - sideA) * (s - sideB) * (s - sideC));
